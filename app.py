@@ -9,12 +9,14 @@ app = Flask(__name__)
 app.config["MONGO_URL"] = "mongodb://localhost:27017/mars_data_db"
 mongo = PyMongo(app)
 
+
 @app.route("/")
 def index():
     #access information from the database
     mars_data = mongo.db.marsData.find_one()
 
     return render_template("index.html", mars=mars_data)
+
 
 @app.route("/scrape")
 def scrape():
@@ -23,7 +25,7 @@ def scrape():
 
     # drop the table if it exisits
     mongo.db.marsData.drop()
-     
+
     #call scrape mars script
     mars_data = scrape_mars.scrape_all()
 

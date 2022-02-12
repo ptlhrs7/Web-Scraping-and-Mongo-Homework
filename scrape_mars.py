@@ -6,13 +6,15 @@ import datetime as dt
 from webdriver_manager.chrome import ChromeDriverManager
 
 #scrape all function
+
+
 def scrape_all():
 
     # Set up Splinter
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
-   
-   #the goal is to returen a json that has all of the neccessary data, so that it 
+
+   #the goal is to returen a json that has all of the neccessary data, so that it
    # can be loaded into MongoDB
 
    #get the information from the news page
@@ -35,6 +37,8 @@ def scrape_all():
     return marsData
 
 #scrape the mars news page
+
+
 def scrape_news(browser):
     # go to the Mars NASA news site
     # Visit the Mars news site
@@ -46,7 +50,7 @@ def scrape_news(browser):
     news_soup = soup(html, 'html.parser')
 
     slide_elem = news_soup.select_one('div.list_text')
-    # grabs the title 
+    # grabs the title
     news_title = slide_elem.find('div', class_='content_title').get_text()
     # grabs the paragraph for the headline
     news_p = slide_elem.find('div', class_='article_teaser_body').get_text()
@@ -87,9 +91,10 @@ def scrape_facts_page(browser):
     html = browser.html
     fact_soup = soup(html, 'html.parser')
 
-    #find the fact location 
-    factsLocation = fact_soup.find('div', class_= "diagram mt-4")
-    factTable = factsLocation.find('table') #grab the html cod for the fact table
+    #find the fact location
+    factsLocation = fact_soup.find('div', class_="diagram mt-4")
+    # grab the html cod for the fact table
+    factTable = factsLocation.find('table')
 
     #create an empty string
     facts = ""
@@ -114,20 +119,20 @@ def scrape_hemispheres(browser):
         # loop  through each of the pages
         #hemisphere info dictionary
         hemisphereInfo = {}
-        
+
         # We have to find the elements on each loop to avoid a stale element exception
         browser.find_by_css('a.product-item img')[i].click()
-        
+
         # Next, we find the Sample image anchor tag and extract the href
         sample = browser.links.find_by_text('Sample').first
         hemisphereInfo["img_url"] = sample['href']
-        
+
         # Get Hemisphere title
         hemisphereInfo['title'] = browser.find_by_css('h2.title').text
-        
+
         # Append hemisphere object to list
         hemisphere_image_urls.append(hemisphereInfo)
-        
+
         # Finally, we navigate backwards
         browser.back()
 
