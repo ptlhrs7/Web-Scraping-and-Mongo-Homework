@@ -143,3 +143,5 @@ def scrape_hemispheres(browser):
 #set up as a flask app
 if __name__ == "__main__":
     print(scrape_all())
+
+#refence code used from Dr.A's Videos
