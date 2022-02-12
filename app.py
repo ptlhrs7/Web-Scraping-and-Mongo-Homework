@@ -38,3 +38,5 @@ def scrape():
 
 if __name__ == "__main__":
     app.run()
+
+# Refence code used from Dr.A's Videos
